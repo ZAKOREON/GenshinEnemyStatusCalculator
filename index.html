@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+    <title></title>
+  </head>
+  <body>
+
+    <!-- 君ごときが、僕を直視する気か？ -->
+    
+    <header class="header">
+      <h1 class="header-title">Enemy HP Calculator</h1>
+    </header>
+
+    <main class="main">
+      <section class="section enemy-selection-section">
+        <h2 class="section-title">All Enemies</h2>
+        <div class="enemies-table-frame">
+          <div class="enemy-type-menu">
+            <input type="radio" name="enemyTypeRatios" class="enemy-type-radio hide" id="enemyTypeCommon" onchange="setEnemyTable()" checked>
+            <label for="enemyTypeCommon" class="enemy-type-option">普通</label>
+            <input type="radio" name="enemyTypeRatios" class="enemy-type-radio hide" id="enemyTypeElite" onchange="setEnemyTable()">
+            <label for="enemyTypeElite" class="enemy-type-option selected">精鋭</label>
+            <input type="radio" name="enemyTypeRatios" class="enemy-type-radio hide" id="enemyTypeBoss" onchange="setEnemyTable()">
+            <label for="enemyTypeBoss" class="enemy-type-option">ボス</label>
+            <input type="radio" name="enemyTypeRatios" class="enemy-type-radio hide" id="enemyTypeWeeklyBoss" onchange="setEnemyTable()">
+            <label for="enemyTypeWeeklyBoss" class="enemy-type-option">週ボス</label>
+            <input type="radio" name="enemyTypeRatios" class="enemy-type-radio hide" id="enemyTypeOther" onchange="setEnemyTable()">
+            <label for="enemyTypeOther" class="enemy-type-option">その他</label>
+          </div>
+          <div class="enemy-table">
+            <div class="enemy-filter">
+              <input type="text" id="enemyFilterInput" class="enemy-filter-input" placeholder="フィルター" autocomplete="off" oninput="filteringEnemyTable()">
+            </div>
+            <div id="enemyTableContent"></div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <section class="section selected-enemy-section">
+        <h2 class="section-title">Selected Enemies<span class="all-reset"><span onclick="allResetSelectedEnemy()">Reset</span></span></h2>
+        <div class="selected-enemy-frame" id="selectedEnemyFrame"></div>
+      </section>
+
+
+
+      <section class="section calculation-setting-section">
+        <h2 class="section-title">Calculation Setting</h2>
+        <label for="dpsReferenceTime" class="input-label">
+          <span class="input-label-content">DPS基準時間: </span>
+          <input type="text" class="input-text" id="dpsReferenceTime" value="90" oninput="updateBuff()">s
+        </label>
+        <label for="abyssBuffCheckbox" class="checkbox-label">
+          <input type="checkbox" class="input-checkbox" id="abyssBuffCheckbox" oninput="updateBuff()">
+          <span class="checkbox-label-content">深境螺旋ボーナス: </span>
+          <select class="buff-selector" aria-label="select" id="abyssBuffSelector" oninput="updateBuff()">
+            <option value="1.5">Floor 3 - 7 HP×1.5</option>
+            <option value="2">Floor 8 - 11 HP×2.0</option>
+            <option value="2.5" selected>Floor 12 HP×2.5</option>
+          </select>
+        </label>
+        <label for="multiplayerBuffCheckbox" class="checkbox-label">
+          <input type="checkbox" class="input-checkbox" id="multiplayerBuffCheckbox" oninput="updateBuff()">
+          <span class="checkbox-label-content">マルチプレイボーナス: </span>
+          <select class="buff-selector" aria-label="select" id="multiplayerBuffSelector" oninput="updateBuff()">
+            <option value="1.5">2 Players HP×1.5</option>
+            <option value="2">3 Players HP×2.0</option>
+            <option value="2.5">4 Players HP×2.5</option>
+          </select>
+        </label>
+      </section>
+
+
+
+      <section class="section calculation-output-section">
+        <div class="total-hp" id="totalHP"></div>
+        <div class="need-dps" id="needDPS">30000</div>
+      </section>
+    </main>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

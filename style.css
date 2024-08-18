@@ -1,0 +1,499 @@
+@font-face {
+  font-family: "GenshinFont";
+  src: url("GenshinFont.ttf"), format("trueType");
+}
+
+:root{
+  --main-color: #333;
+  --base-color: #e9e6de;
+  --background-color: #fafafa;
+  --highlight-color: #f2f4f6;
+  --border-color: #e0e0e0;
+  --accent-color: #4884d8;
+  --gray-color: #bbb;
+}
+
+*,
+input{
+  margin: 0;
+  padding: 0;
+  font-family: "GenshinFont", "Yu Gothic Medium", "Arial", sans-serif !important;
+  box-sizing: border-box;
+}
+
+html{
+  height: 100%;
+}
+
+body{
+  min-width: 1100px;
+  height: 100%;
+  padding: 16px;
+  background: var(--base-color);
+  color: var(--main-color);
+  user-select: none;
+}
+
+.hide{
+  display: none;
+}
+
+.header{
+  height: 45px;
+  padding: 0 15px;
+  background: var(--background-color);
+  border-radius: 5px;
+  line-height: 45px;
+}
+
+.header-title{
+  font-size: 19px;
+  font-weight: normal;
+}
+
+
+.main{
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 1fr 158px 92px;
+  height: calc(100% - 61px);
+  gap: 16px;
+  margin: 16px 0 0 0;
+}
+
+.section{
+  padding: 12px;
+  background: var(--background-color);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.enemy-selection-section{
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+}
+
+.selected-enemy-section{
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.calculation-setting-section{
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.calculation-output-section{
+  position: relative;
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+}
+
+.section-title{
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.enemies-table-frame{
+  height: calc(100% - 30px);
+}
+
+.enemy-type-menu{
+  display: flex;
+  justify-content: space-between;
+}
+
+.enemy-type-option{
+  height: 40px;
+  width: 100%;
+  border: solid 1px transparent;
+  border-bottom-color: var(--border-color);
+  border-radius: 5px 5px 0 0;
+  font-size: 13px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+input:checked + .enemy-type-option{
+  border: solid 1px var(--border-color);
+  border-bottom-color: transparent;
+  color: var(--accent-color);
+}
+
+.enemy-table{
+  height: calc(100% - 40px);
+  padding: 0 16px 16px 16px;
+  border: solid 1px var(--border-color);
+  border-top: none;
+  overflow-y: scroll;
+}
+
+.enemy-table::-webkit-scrollbar{
+  width: 4px;
+}
+
+.enemy-table::-webkit-scrollbar-thumb{
+  background: var(--main-color);
+  border: solid 2px var(--background-color);
+  border-left: none;
+}
+
+.enemy-filter{
+  position: sticky;
+  top: 0;
+  height: 55px;
+  background: var(--background-color);
+  z-index: 200;
+}
+
+.enemy-filter-input{
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 35px;
+  padding: 0 5px;
+  border: none;
+  border-bottom: solid 1px var(--border-color);
+  background: none;
+  outline: none;
+}
+
+.enemy-filter-input::placeholder{
+  color: var(--border-color);
+}
+
+.enemy-item{
+  position: relative;
+  height: 65px;
+  margin: 0 0 10px 0;
+  padding: 5px;
+  transition: all .1s;
+  z-index: 100;
+}
+
+.enemy-item:hover{
+  background: var(--highlight-color);
+}
+
+.enemy-item:last-child{
+  margin: 0;
+}
+
+.enemy-image{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  width: 55px;
+  height: 55px;
+  background-size: cover;
+  background-position: center;
+}
+
+.enemy-name{
+  position: absolute;
+  top: 50%;
+  left: 70px;
+  transform: translateY(-50%);
+  width: calc(100% - 316px);
+  font-size: 14px;
+}
+
+.enemy-level{
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 222px;
+  color: var(--gray-color);
+  transition: all .1s;
+}
+
+.enemy-level-option{
+  height: 40px;
+  width: 40px;
+  background: var(--background-color);
+  border-radius: 50%;
+  font-size: 15px;
+  text-align: center;
+  line-height: 41px;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.enemy-level-option:last-child{
+  font-size: 14px;
+}
+
+.enemy-level-option:hover{
+  background: var(--accent-color);
+  color: var(--background-color);
+}
+
+.all-reset{
+  margin: 0 0 0 20px;
+  padding: 0 0 0 18px;
+  border-left: solid 1px var(--border-color);
+  font-size: 14px;
+}
+
+.all-reset span{
+  padding: 2px;
+  color: var(--gray-color);
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.all-reset span:hover{
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+.selected-enemy-frame{
+  width: 100%;
+  height: calc(100% - 30px);
+  overflow-y: scroll;
+}
+
+.selected-enemy-frame::-webkit-scrollbar{
+  width: 4px;
+}
+
+.selected-enemy-frame::-webkit-scrollbar-thumb{
+  background: var(--main-color);
+  border: solid 2px var(--background-color);
+  border-left: none;
+}
+
+.selected-enemy-frame:empty::after{
+  content: 'Select The Enemy from The "All Enemies"';
+  position: relative;
+  top: 5px;
+  color: var(--gray-color);
+  font-size: 12px;
+}
+
+.selected-enemy-item{
+  display: inline-block;
+  position: relative;
+  width: calc(50% - 4.9px);
+  height: 70px;
+  margin: 0 0 6px 0;
+  background: var(--highlight-color);
+  border-radius: 5px;
+}
+
+.selected-enemy-item:nth-of-type(2n-1){
+  margin: 0 5px 6px 0;
+}
+
+.selected-enemy-image{
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selected-enemy-image::before{
+  content: "×";
+  opacity: 0;
+  position: absolute;
+  top: calc(50% + 2px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: var(--background-color);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.selected-enemy-image::after{
+  content: "";
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: red;
+  border-radius: 5px;
+  color: var(--background-color);
+  transition: all .1s;
+  pointer-events: none;
+}
+
+.selected-enemy-image:hover::before{
+  opacity: 1;
+}
+
+.selected-enemy-image:hover::after{
+  opacity: .6;
+}
+
+.operate-input{
+  width: 38px;
+  padding: 2px 4px;
+  background: var(--background-color);
+  border: none;
+  border-bottom: solid 1px var(--border-color);
+  outline: none;
+  font-size: 16px;
+}
+
+.operate-input::-webkit-outer-spin-button,
+.operate-input::-webkit-inner-spin-button{
+  appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+}
+
+.selected-enemy-setting{
+  position: absolute;
+  top: 8px;
+  left: 75px;
+  width: calc(100% - 80px);
+  height: 25px;
+  line-height: 25px;
+}
+
+.selected-enemy-level{
+  display: inline-block;
+  cursor: pointer;
+}
+
+.selected-enemy-level::before{
+  content: "Lv.";
+  margin: 0 1px 0 0;
+  font-size: 13px;
+}
+
+.number-of-enemies{
+  display: inline-block;
+  position: relative;
+  margin: 0 0 0 18px;
+  cursor: pointer;
+}
+
+.number-of-enemies::before{
+  content: "×";
+  position: absolute;
+  top: 50%;
+  left: -16px;
+  transform: translateY(-50%);
+  margin: 0 12px 0 0;
+  pointer-events: none;
+}
+
+.selected-enemy-hp{
+  position: absolute;
+  top: 41px;
+  left: 74px;
+  font-size: 14px;
+}
+
+.input-label{
+  display: block;
+  margin: 6px 5px 18px 5px;
+  padding: 3px 6px;
+  font-size: 13px;
+}
+
+.input-label-content{
+  display: inline-block;
+  width: 100px;
+}
+
+.input-text{
+  width: 100px;
+  margin: 0 5px 0 0;
+  padding: 1.5px 6px 1px 6px;
+  border: solid 1px var(--border-color);
+  outline: none;
+}
+
+.checkbox-label{
+  display: block;
+  margin: 2px 5px;
+  padding: 3px 6px;
+  cursor: pointer;
+}
+
+.input-checkbox{
+  position: relative;
+  top: 1.5px;
+  width: 12px;
+  border-color: var(--gray-color);
+}
+
+.checkbox-label-content{
+  display: inline-block;
+  width: 140px;
+  color: var(--gray-color);
+  font-size: 13px;
+  transition: all .1s;
+}
+
+.input-checkbox:checked + .checkbox-label-content{
+  color: var(--accent-color);
+}
+
+.buff-selector{
+  width: 170px;
+  margin: 0 0 0 5px;
+  padding: 1.5px 5px 1px 5px;
+  border: solid 1px var(--border-color);
+  color: var(--gray-color);
+  outline: none;
+  transition: all .1s;
+}
+
+.label-input:checked ~ .buff-selector{
+  color: var(--accent-color);
+}
+
+.total-hp{
+  position: relative;
+  margin: 0 0 8px 10px;
+  padding: 0 0 0 100px;
+  font-size: 25px;
+}
+
+.total-hp::before{
+  content: "合計HP";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+
+.need-dps{
+  position: relative;
+  margin: 0 0 0 10px;
+  padding: 0 0 0 100px;
+  font-size: 25px;
+}
+
+.need-dps::before{
+  content: "必要DPS";
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
